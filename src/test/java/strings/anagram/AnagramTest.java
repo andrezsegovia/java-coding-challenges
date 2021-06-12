@@ -7,25 +7,25 @@ import static org.junit.Assert.*;
 public class AnagramTest {
 
     @Test
-    public void shouldReturnTwo() {
+    public void unitTest_1() {
         String a = "cde";
         String b = "dcf";
         Anagram anagram = new Anagram();
         int result = anagram.compute(a, b);
-        assertEquals("Strings a = \"cde\" and b = \"dcf\" should have 2 deletions to be create an anagram", 2, result);
+        assertEquals(2, result);
     }
 
     @Test
-    public void shouldSuccessIfStringsLengthDeffer() {
+    public void unitTest_2() {
         String a = "cde";
         String b = "dcfv";
         Anagram anagram = new Anagram();
         int result = anagram.compute(a, b);
-        assertEquals("Strings a = \"cde\" and b = \"dcfv\" should have 3 deletions to be create an anagram", 3, result);
+        assertEquals(3, result);
     }
 
     @Test
-    public void testThree() {
+    public void unitTest_3() {
         String a = "cde";
         String b = "dcfvvv";
         Anagram anagram = new Anagram();
@@ -34,7 +34,7 @@ public class AnagramTest {
     }
 
     @Test
-    public void shouldSuccessIfStringsComplex() {
+    public void unitTest_4() {
         String a = "fcrxzwscanmligyxyvym";
         String b = "jxwtrhvujlmrpdoqbisbwhmgpmeoke";
         Anagram anagram = new Anagram();

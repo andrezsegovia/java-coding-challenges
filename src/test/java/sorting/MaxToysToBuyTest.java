@@ -33,7 +33,8 @@ public class MaxToysToBuyTest {
     @Test
     public void testQuickSort1() {
         List<Integer> prices = Arrays.asList(1, 12, 5, 111, 1000, 200, 10);
-        assertEquals(Arrays.asList(1,5,10,12,111,200,1000), new MaxToysToBuy().quicksort(prices, 0, prices.size()-1));
+        QuickSort.sort(prices);
+        assertEquals(Arrays.asList(1,5,10,12,111,200,1000), prices);
     }
 
     @Test

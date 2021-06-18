@@ -38,43 +38,10 @@ public class MaxToysToBuy {
         return numbers;
     }
 
-    private void swap(List<Integer> numbers, int i, int j) {
-        System.out.println("Swapping "+ numbers.get(i) +" at "+ i +" by "+ numbers.get(j) +" at "+ j );
-        int temp = numbers.get(i);
-        numbers.set(i, numbers.get(j));
-        numbers.set(j, temp);
-
-    }
-    // 1, 12, 5, 111, 1000, 200, 10*
-    private int partition(List<Integer> numbers, int low, int high) {
-        int pivot = numbers.get(high);
-        System.out.println("pi = " + pivot ) ;
-        int i = (low-1);
-        System.out.println("i = " + i ) ;
-        for(int j = low; j <= high; j+=1) {
-            System.out.println("j = " + j ) ;
-            if(numbers.get(j) < pivot) {
-                i+=1;
-                swap(numbers, i, j);
-            }
-        }
-        swap(numbers, i+1, high);
-        System.out.println(numbers);
-        return (i+1);
-    }
-    public List<Integer> quicksort(List<Integer> numbers, int low, int high) {
-        if(low < high) {
-            int partition = partition(numbers, low, high);
-            System.out.println("partition="+partition);
-            quicksort(numbers, low, partition-1);
-            quicksort(numbers, partition+1, high);
-        }
-        return numbers;
-    }
     public int compute(List<Integer> prices, int budget) {
-        List<Integer> sortedPrices = quicksort(prices, 0, prices.size()-1);
+        QuickSort.sort(prices);
         int toysToBuy = 0;
-        for(Integer price: sortedPrices) {
+        for(Integer price: prices) {
             if(price <= budget) {
                 toysToBuy+=1;
                 budget-=price;

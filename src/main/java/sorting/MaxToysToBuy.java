@@ -39,9 +39,11 @@ public class MaxToysToBuy {
     }
 
     private void swap(List<Integer> numbers, int i, int j) {
+        System.out.println("Swapping "+ numbers.get(i) +" at "+ i +" by "+ numbers.get(j) +" at "+ j );
         int temp = numbers.get(i);
         numbers.set(i, numbers.get(j));
         numbers.set(j, temp);
+
     }
     // 1, 12, 5, 111, 1000, 200, 10*
     private int partition(List<Integer> numbers, int low, int high) {
@@ -70,6 +72,14 @@ public class MaxToysToBuy {
         return numbers;
     }
     public int compute(List<Integer> prices, int budget) {
-        return 0;
+        List<Integer> sortedPrices = quicksort(prices, 0, prices.size()-1);
+        int toysToBuy = 0;
+        for(Integer price: sortedPrices) {
+            if(price <= budget) {
+                toysToBuy+=1;
+                budget-=price;
+            }
+        }
+        return toysToBuy;
     }
 }

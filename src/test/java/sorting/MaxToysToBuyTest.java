@@ -21,6 +21,22 @@ public class MaxToysToBuyTest {
     }
 
     @Test
+    public void testBubbleSort1() {
+        List<Integer> prices = Arrays.asList(1, 12, 5, 111, 1000, 200, 10);
+        assertEquals(Arrays.asList(1,5,10,12,111,200,1000), new MaxToysToBuy().bubbleSort(prices));
+    }
+    @Test
+    public void testBubbleSort2() {
+        List<Integer> prices = Arrays.asList(7,6,5,4,3,2,1);
+        assertEquals(Arrays.asList(1,2,3,4,5,6,7), new MaxToysToBuy().bubbleSort(prices));
+    }
+    @Test
+    public void testQuickSort1() {
+        List<Integer> prices = Arrays.asList(1, 12, 5, 111, 1000, 200, 10);
+        assertEquals(Arrays.asList(1,5,10,12,111,200,1000), new MaxToysToBuy().quicksort(prices, 0, prices.size()-1));
+    }
+
+    @Test
     public void test1() {
         List<Integer> prices = Arrays.asList(1, 12, 5, 111, 200, 1000, 10);
         int budget = 50;

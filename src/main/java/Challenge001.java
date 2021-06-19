@@ -3,7 +3,6 @@ import sorting.QuickSort;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
-import java.util.Scanner;
 
 public class Challenge001 {
 
@@ -31,17 +30,15 @@ public class Challenge001 {
         }
     }
 
-    public static void main(String args[]) throws Exception {
+    public static List<String> compute(String casesStr, String[] eventByLine) {
+        long start = System.nanoTime();
         List<String> errors = new ArrayList<>();
         try {
-            Scanner scan = new Scanner(System.in);
-            String casesStr = scan.next();
             int cases = getTotalCases(casesStr);
-            List<List<Integer>> events = new ArrayList<>(cases);
             int line = 0;
-            while (cases >= 0) {
+            while (cases > 0) {
                 cases--;
-                List<Integer> eventsList = parseEventsStringToEventsList(scan.nextLine(), ++line, errors);
+                List<Integer> eventsList = parseEventsStringToEventsList(eventByLine[line], ++line, errors);
                 if (eventsList.isEmpty()) {
                     continue;
                 }
@@ -57,6 +54,9 @@ public class Challenge001 {
         } catch (Exception e) {
             errors.add(e.getMessage());
         }
-        errors.forEach(System.out::println);
+        System.out.println("Time consume: " + (System.nanoTime() - start));
+        return errors;
     }
+
+
 }

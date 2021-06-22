@@ -18,8 +18,6 @@ public class QuickSort {
         sort(numbers, index, right);
     }
 
-
-
     private static int partition(List<Integer> numbers, int left, int right, int pivot) {
         while (left <= right) {
             while (numbers.get(left) < pivot) {

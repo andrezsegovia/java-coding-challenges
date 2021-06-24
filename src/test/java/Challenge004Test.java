@@ -1,8 +1,7 @@
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class Challenge004Test {
 
@@ -51,4 +50,25 @@ public class Challenge004Test {
         int[] expenditures = {50,30,20,10,40,60}; // 10 20 30 40 50 60 => (20+10)/2 = 15
         assertEquals(expected, challenge004.median(expenditures));
     }
+
+    @Test
+    public void sortEmptyExpenditures() {
+        int[] emptyExpenditures = {};
+        try {
+            challenge004.sort(emptyExpenditures);
+        } catch (IllegalArgumentException e) {
+            assertEquals("array should not be empty", e.getMessage());
+        }
+    }
+
+    @Test
+    public void sortNonEmptyAExpenditures() {
+        int[] expenditures = {50,30,20,10,40,60};
+
+        challenge004.sort(expenditures);
+
+        int[] expectedOrderedExpenditures = {10,20,30,40,50,60};
+        assertArrayEquals(expectedOrderedExpenditures, expenditures);
+    }
+
 }

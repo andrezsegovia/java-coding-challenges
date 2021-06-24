@@ -1,5 +1,7 @@
 import com.sun.javaws.exceptions.InvalidArgumentException;
 
+import java.util.Arrays;
+
 public class Challenge004 {
     /**
      * Get the median of a non-empty and ordered array on integers.
@@ -17,5 +19,45 @@ public class Challenge004 {
             return (middleLeft+middleRight)/2;
         }
         return arr[(arr.length/2)];
+    }
+
+    private int partition(int[] arr, int left, int right, int pivot) {
+        while (left <= right) {
+            while (arr[left] < pivot) {
+                left++;
+            }
+            while (arr[right] > pivot) {
+                right--;
+            }
+            if(left <= right) {
+                swap(arr, left, right);
+                left++;
+                right--;
+            }
+        }
+        return left;
+    }
+
+    private void swap(int[] arr, int left, int right) {
+        int temp = arr[left];
+        arr[left] = arr[right];
+        arr[right] = temp;
+    }
+
+    private void sort(int[] arr, int left, int right) {
+        if(left >= right) {
+            return;
+        }
+        int pivot = arr[((left+right)/2)];
+        int partition = partition(arr, left, right, pivot);
+        sort(arr, left, partition-1);
+        sort(arr, partition, right);
+    }
+
+    public void sort(int[] arr) {
+        if(arr.length == 0) {
+            throw new IllegalArgumentException("array should not be empty");
+        }
+        sort(arr, 0, arr.length-1);
     }
 }

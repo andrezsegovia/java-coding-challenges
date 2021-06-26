@@ -1,12 +1,19 @@
+import junitparams.FileParameters;
+import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.junit.Assert.*;
 
+@RunWith(JUnitParamsRunner.class)
 public class Challenge004Test {
 
     private Challenge004 challenge004;
@@ -18,7 +25,7 @@ public class Challenge004Test {
 
     @Test
     public void medianOfEmptyExpectation() {
-        int[] expenditures = {};
+        List<Integer> expenditures = new ArrayList<>();
         try {
             challenge004.median(expenditures);
         } catch (Exception e) {
@@ -30,34 +37,34 @@ public class Challenge004Test {
     @Test
     public void medianOfOddOrderedExpenditures() {
         double expected = 30.0;
-        int[] expenditures = {10,20,30,40,50};
+        List<Integer> expenditures = Arrays.asList(10,20,30,40,50);
         assertEquals(expected, challenge004.median(expenditures),0);
     }
 
     @Test
     public void medianOfEvenOrderedExpenditures() {
         double expected = 35.0;
-        int[] expenditures = {10,20,30,40,50,60}; // 10 20 30 40 50 60 => (30+40)/2 = 35
+        List<Integer> expenditures = Arrays.asList(10,20,30,40,50,60); // 10 20 30 40 50 60 => (30+40)/2 = 35
         assertEquals(expected, challenge004.median(expenditures),0);
     }
 
     @Test
     public void medianOfOddUnorderedExpenditures() {
         double expected = 40.0;
-        int[] expenditures = {20,30,40,10,50};
+        List<Integer> expenditures = Arrays.asList(20,30,40,10,50);
         assertEquals(expected, challenge004.median(expenditures),0);
     }
 
     @Test
     public void medianOfEvenUnorderedExpenditures() {
         double expected = 15.0;
-        int[] expenditures = {50,30,20,10,40,60}; // 10 20 30 40 50 60 => (20+10)/2 = 15
+        List<Integer> expenditures = Arrays.asList(50,30,20,10,40,60); // 10 20 30 40 50 60 => (20+10)/2 = 15
         assertEquals(expected, challenge004.median(expenditures), 0);
     }
 
     @Test
     public void sortEmptyExpenditures() {
-        int[] emptyExpenditures = {};
+        List<Integer> emptyExpenditures = new ArrayList<>();
         try {
             challenge004.sort(emptyExpenditures);
         } catch (IllegalArgumentException e) {
@@ -67,17 +74,17 @@ public class Challenge004Test {
 
     @Test
     public void sortNonEmptyAExpenditures() {
-        int[] expenditures = {50,30,20,10,40,60};
+        List<Integer> expenditures = Arrays.asList(50,30,20,10,40,60);
 
         challenge004.sort(expenditures);
 
-        int[] expectedOrderedExpenditures = {10,20,30,40,50,60};
-        assertArrayEquals(expectedOrderedExpenditures, expenditures);
+        List<Integer> expectedOrderedExpenditures = Arrays.asList(10,20,30,40,50,60);
+        assertEquals(expectedOrderedExpenditures, expenditures);
     }
 
     @Test
     public void hasPreviousExpendituresEmptyExpenditures() {
-        int[] expenditures = {};
+        List<Integer> expenditures = new ArrayList<>();
         int trailingDays = 4;
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
             challenge004.hasPreviousExpenditures(expenditures, trailingDays);
@@ -87,28 +94,28 @@ public class Challenge004Test {
 
     @Test
     public void hasPreviousExpendituresSmallExpenditures() {
-        int[] expenditures = {10,20,30,40};
+        List<Integer>  expenditures = Arrays.asList(10,20,30,40);
         int trailingDays = 5;
         assertEquals(false, challenge004.hasPreviousExpenditures(expenditures, trailingDays));
     }
 
     @Test
     public void hasPreviousExpendituresEqualExpenditures() {
-        int[] expenditures = {10,20,30,40};
+        List<Integer>  expenditures = Arrays.asList(10,20,30,40);
         int trailingDays = 4;
         assertEquals(false, challenge004.hasPreviousExpenditures(expenditures, trailingDays));
     }
 
     @Test
     public void hasPreviousExpendituresEnoughExpenditures() {
-        int[] expenditures = {10,20,30,40,50};
+        List<Integer>  expenditures = Arrays.asList(10,20,30,40,50);
         int trailingDays = 4;
         assertEquals(true, challenge004.hasPreviousExpenditures(expenditures, trailingDays));
     }
 
     @Test
     public void calculateNotifications() {
-        int[] expenditures = {10,20,30,40,50};
+        List<Integer> expenditures = Arrays.asList(10,20,30,40,50);
         int trailingDays = 3;
 
         int notifications = challenge004.notifications(expenditures, trailingDays);
@@ -118,7 +125,7 @@ public class Challenge004Test {
 
     @Test
     public void calculateNotificationsWithoutEnoughExpenditures() {
-        int[] expenditures = {10,20,30,40};
+        List<Integer> expenditures = Arrays.asList(10,20,30,40);
         int trailingDays = 4;
 
         int notifications = challenge004.notifications(expenditures, trailingDays);
@@ -128,7 +135,7 @@ public class Challenge004Test {
 
     @Test
     public void calculateNotificationsLongerExpenditures() {
-        int[] expenditures = {10,20,30,40,50,70,80,90,100}; // 50
+        List<Integer> expenditures = Arrays.asList(10,20,30,40,50,70,80,90,100); // 50
         int trailingDays = 4;
 
         int notifications = challenge004.notifications(expenditures, trailingDays);
@@ -138,7 +145,7 @@ public class Challenge004Test {
 
     @Test
     public void calculateNotifications_2() {
-        int[] expenditures = {2,3,4,2,3,6,8,4,5}; // 50
+        List<Integer> expenditures = Arrays.asList(2,3,4,2,3,6,8,4,5); // 50
         int trailingDays = 5;
 
         int notifications = challenge004.notifications(expenditures, trailingDays);
@@ -147,27 +154,14 @@ public class Challenge004Test {
     }
 
     @Test
-    public void calculateNotifications_3() {
-        int[] expenditures = {1,2,3,4,4}; // 50
-        int trailingDays = 4;
-
+    @FileParameters("classpath:challenge004/test.csv")
+    public void calculateNotifications_3(int trailingDays, int notificationsExpected, String expendituresStr ) {
+        String[] expendituresStrArr = expendituresStr.split("-");
+        List<Integer> expenditures = (List<Integer>) Stream.of(expendituresStrArr)
+                .map(Integer::valueOf)
+                .limit(expendituresStrArr.length)
+                .collect(Collectors.toList());
         int notifications = challenge004.notifications(expenditures, trailingDays);
-
-        assertEquals(0, notifications);
-    }
-
-    @Test
-    public void name() {
-        List<Integer> expences = new ArrayList<>();
-        expences.add(10);
-        expences.add(20);
-        expences.add(30);
-        expences.add(40);
-        expences.add(50);
-
-        int[] newArray = expences.stream().mapToInt(Integer::intValue).toArray();
-
-        System.out.println(Arrays.toString(newArray));
-
+        assertEquals(notificationsExpected, notifications);
     }
 }

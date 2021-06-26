@@ -1,34 +1,42 @@
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class Challenge004 {
     /**
      * Get the median of a non-empty and ordered array on integers.
-     * @param arr array of integers
+     * @param list array of integers
      * @return {@code int} value that represents the median
      * @throws IllegalArgumentException when the array is null
      */
-    public double median(int[] arr) {
-        if(arr.length == 0) {
+    public double median(List<Integer> list) {
+        if(list.isEmpty()) {
             throw new IllegalArgumentException("array should not be empty");
         }
-        if(arr.length % 2 == 0) {
-            int middleLeft = arr[(arr.length/2)-1];
-            int middleRight = arr[arr.length/2];
-            return (middleLeft+middleRight)/2.0;
+        final int size = list.size();
+        double result;
+        if(size % 2 == 0) {
+            int middleLeft = list.get((size/2)-1);
+            int middleRight = list.get(size/2);
+            result = (Double.sum(middleLeft,middleRight)/2.0d);
         }
-        return arr[(arr.length/2)];
+        result = Double.valueOf(list.get(size/2));
+        System.out.println(String.format("median is %.00f for:", result));
+        System.out.println(list);
+        return result;
     }
 
-    private int partition(int[] arr, int left, int right, int pivot) {
+    private int partition(List<Integer> list, int left, int right, int pivot) {
         while (left <= right) {
-            while (arr[left] < pivot) {
+            while (list.get(left) < pivot) {
                 left++;
             }
-            while (arr[right] > pivot) {
+            while (list.get(right) > pivot) {
                 right--;
             }
             if(left <= right) {
-                swap(arr, left, right);
+                swap(list, left, right);
                 left++;
                 right--;
             }
@@ -36,57 +44,59 @@ public class Challenge004 {
         return left;
     }
 
-    private void swap(int[] arr, int left, int right) {
-        int temp = arr[left];
-        arr[left] = arr[right];
-        arr[right] = temp;
+    private void swap(List<Integer> list, int left, int right) {
+        int temp = list.get(left);
+        list.set(left,list.get(right));
+        list.set(right,temp);
     }
 
-    private void sort(int[] arr, int left, int right) {
+    private void sort(List<Integer> list, int left, int right) {
         if(left >= right) {
             return;
         }
-        int pivot = arr[((left+right)/2)];
-        int partition = partition(arr, left, right, pivot);
-        sort(arr, left, partition-1);
-        sort(arr, partition, right);
+        int pivot = list.get(((left+right)/2));
+        int partition = partition(list, left, right, pivot);
+        sort(list, left, partition-1);
+        sort(list, partition, right);
     }
 
-    public void sort(int[] arr) {
-        if(arr.length == 0) {
+    public void sort(List<Integer> list) {
+        if(list.isEmpty()) {
             throw new IllegalArgumentException("array should not be empty");
         }
-        sort(arr, 0, arr.length-1);
+        sort(list, 0, list.size()-1);
     }
 
-    public boolean hasPreviousExpenditures(int[] expenditures, int trailingDays) {
-        if(expenditures.length == 0) {
+    public Boolean hasPreviousExpenditures(List<Integer> list, int trailingDays) {
+        if(list.isEmpty()) {
             throw new IllegalArgumentException("array should not be empty");
         }
-        if(expenditures.length > trailingDays) {
-            return true;
+        if(list.size() > trailingDays) {
+            return Boolean.TRUE;
         }
-        return false;
+        return Boolean.FALSE;
     }
 
-    public int notifications(int[] expenditures, int trailingDays) {
+    public int notifications(List<Integer> expenditures, int trailingDays) {
         int notifications = 0;
-        int[] expendituresUnsorted = Arrays.copyOf(expenditures,expenditures.length);
+        //int[] expendituresUnsorted = Arrays.copyOf(expenditures,expenditures.length);
+        List<Integer> expendituresUnsorted = new ArrayList<>(expenditures);
         sort(expenditures);
-        System.out.println(Arrays.toString(expendituresUnsorted));
-        System.out.println(Arrays.toString(expenditures));
+        //System.out.println(expendituresUnsorted);
+        //System.out.println(Arrays.toString(expenditures));
         if(!hasPreviousExpenditures(expenditures, trailingDays)) {
             return 0;
         }
-        for (int i = trailingDays; i < expenditures.length ; i++) {
-            int[] previousExpenditures = new int[trailingDays];
-            System.arraycopy(expenditures, i-trailingDays, previousExpenditures, 0, trailingDays);
-            System.out.println(Arrays.toString(previousExpenditures));
-            System.out.println(expendituresUnsorted[i]);
+        for (int i = trailingDays; i < expenditures.size() ; i++) {
+            List<Integer> previousExpenditures = expenditures.subList((i-trailingDays), i);
+            //System.out.println(previousExpenditures);
+           // System.out.println(expendituresUnsorted[i]);
             double median = median(previousExpenditures);
-            System.out.println(median*2);
-            if(expendituresUnsorted[i] >= (median*2)) {
+            //System.out.println(median*2);
+            if(Double.compare((double)expendituresUnsorted.get(i),(median*2.0)) >= 0) {
+                //System.out.println(String.format("with median of %f (%f) and expenditure of %f", median*2.0,median,(double)expendituresUnsorted.get(i)));
                 notifications++;
+                //System.out.println("Notifications: "+ notifications);
             }
         }
         return notifications;

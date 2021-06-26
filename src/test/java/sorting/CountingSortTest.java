@@ -28,5 +28,12 @@ public class CountingSortTest {
         assertEquals(Arrays.asList(1, 1, 2, 2, 4, 5, 7), list);
     }
 
+    @Test
+    public void sortListWith200MaximumNumberTwo() {
+        List<Integer> list = Arrays.asList(1, 4, 1, 2, 7, 5, 2);
 
+        CountingSort.sort(list, 200);
+
+        assertEquals(Arrays.asList(1, 1, 2, 2, 4, 5, 7), list);
+    }
 }

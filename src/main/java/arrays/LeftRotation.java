@@ -1,27 +1,28 @@
 package arrays;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class LeftRotation {
 
-    public static List<Integer> rotate(int rotations, List<Integer> array) {
-        List<Integer> rotatedList = new ArrayList<>(array.size());
-        for (int i : array) {
-            rotatedList.add(0);
+    public static List<Integer> rotate(int d, List<Integer> array) {
+        if (array.isEmpty()) {
+            return array;
         }
-        while (rotations > 0 ) { //d
-            rotations--;
-            for (int i = 0; i < array.size(); i++) {//n
-                if(i == 0) {
-                    rotatedList.set(array.size()-1, array.get(i));
-                    continue;
-                }
-                rotatedList.set((i-1), array.get(i));
+
+        List<Integer> rotatedList = array.stream()
+                .map((i)->0).collect(Collectors.toList());
+
+        int newIndex = 0;
+        for (int i = 0; i < array.size(); i++) {//n
+            newIndex = i - d;
+            if(newIndex < 0) {
+                newIndex = array.size() - d + i;
+                rotatedList.set(newIndex, array.get(i));
+                continue;
             }
-            Collections.copy(array,rotatedList);//n => O(d*n)
+            rotatedList.set(newIndex, array.get(i));
         }
-        return array;
+        return rotatedList;
     }
 }

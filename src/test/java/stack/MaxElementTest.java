@@ -146,4 +146,5 @@ public class MaxElementTest {
 
         assertEquals(100, max);
     }
+
 }

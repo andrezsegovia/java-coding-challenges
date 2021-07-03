@@ -140,7 +140,31 @@ public class EqualStacksTest {
 
         int height = EqualStacks.equalStacks(h1,h2,h3);
 
+        Collectors.toCollection(Stack::new);
         assertEquals(2, height);
+    }
+
+    @Test
+    public void equalStackTwo() {
+        h1.push(1);
+        h1.push(1);
+        h1.push(1);
+        h1.push(2);
+        h1.push(3);
+
+        h2.push(2);
+        h2.push(3);
+        h2.push(4);
+
+        h3.push(1);
+        h3.push(4);
+        h3.push(1);
+        h3.push(1);
+
+        int height = EqualStacks.equalStacks(h1,h2,h3);
+
+        Collectors.toCollection(Stack::new);
+        assertEquals(5, height);
     }
 
     @Test
@@ -161,25 +185,6 @@ public class EqualStacksTest {
         expectedStack.push(3);
         expectedStack.push(2);
         assertEquals(currentHeight, newHeight);
-        assertEquals(expectedStack, stack);
-    }
-
-    @Test
-    public void changeStackHeightWithInvalidStack() {
-        int newHeight = 2;
-        int currentHeight = 8;
-
-        Stack<Integer> stack = new Stack<>();
-        stack.push(3);
-        stack.push(2);
-        stack.push(1);
-        stack.push(2);
-
-        Stack<Integer> expectedStack = (Stack<Integer>) stack.clone();
-
-        int newHeightResult = EqualStacks.changeHeight(stack, currentHeight, newHeight);
-
-        assertEquals(currentHeight, newHeightResult);
         assertEquals(expectedStack, stack);
     }
 

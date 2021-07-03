@@ -30,7 +30,9 @@ public class EqualStacks {
                 h1Height = changeHeight((Stack<Integer>) h1, h1Height, h2Height);
             } else if (h1AndH2Difference < 0){
                 h2Height = changeHeight((Stack<Integer>) h2, h2Height, h1Height);
-            } else if(h1AndH3Difference > 0) {
+            }
+
+            if(h1AndH3Difference > 0) {
                 h1Height = changeHeight((Stack<Integer>) h1, h1Height, h3Height);
             } else if (h1AndH3Difference < 0){
                 h3Height = changeHeight((Stack<Integer>) h3, h3Height, h1Height);
@@ -43,15 +45,15 @@ public class EqualStacks {
     public static int changeHeight(Stack<Integer> stack,
                                     int currentHeight, int newHeight) {
         int currentHeightTemp = currentHeight;
-        Stack<Integer> stackTemp = (Stack<Integer>) stack.clone();
+        //Stack<Integer> stackTemp = (Stack<Integer>) stack.clone();
         while (currentHeight > newHeight) {
-            currentHeight -= stackTemp.pop();
+            currentHeight -= stack.pop();
         }
-        if(currentHeight == newHeight){
+        /*if(currentHeight == newHeight){
             stack.clear();
             stack.addAll(stackTemp);
             return currentHeight;
-        }
-        return currentHeightTemp;
+        }*/
+        return currentHeight;
     }
 }

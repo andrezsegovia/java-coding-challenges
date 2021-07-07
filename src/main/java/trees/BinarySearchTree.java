@@ -18,6 +18,19 @@ public class BinarySearchTree {
     public BinarySearchTree() {
         this.root = null;
     }
+    int height() {
+        return height(this.root);
+    }
+
+    int height(Node root) {
+        if(root == null) {
+            return -1;
+        }
+        int leftHeight = height(root.left);
+        int rightHeight = height(root.right);
+
+        return (leftHeight > rightHeight ? leftHeight : rightHeight)+1;
+    }
 
     void insert(int data) {
         this.root = insert(this.root, data);

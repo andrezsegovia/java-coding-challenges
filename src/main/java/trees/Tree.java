@@ -1,5 +1,10 @@
 package trees;
 
+import com.sun.org.apache.xml.internal.security.algorithms.implementations.IntegrityHmac;
+
+import java.util.Map;
+import java.util.TreeMap;
+
 public class Tree {
 
     static class Node {
@@ -42,6 +47,25 @@ public class Tree {
             preorder(node.left);
             preorder(node.right);
         }
+
+
+        void levelOrder(Node node, int level, Map<Integer, StringBuilder> map) {
+            if(node == null) {
+                return;
+            }
+            map.compute(level, (key,value) -> value == null? new StringBuilder(String.valueOf(node.value)) : value.append(",").append(node.value));
+            levelOrder(node.left, level+1, map);
+            levelOrder(node.right, level+1, map);
+        }
+        void levelOrder(Node node) {
+            Map<Integer, StringBuilder> map = new TreeMap<>();
+            levelOrder(node, 0, map);
+            map.forEach((key, value) -> {
+                for (String str : value.toString().split(",")){
+                    System.out.printf("%s ", str);
+                }
+            });
+        }
     }
 
     public static void main(String[] args) {
@@ -58,6 +82,9 @@ public class Tree {
         bt.preorder(bt.root);
         System.out.println("\npostorder...");
         bt.postorder(bt.root);
+        System.out.println("\nlevelorder...");
+        bt.levelOrder(bt.root);
+
 
     }
 }
